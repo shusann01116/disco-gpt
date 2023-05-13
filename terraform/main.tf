@@ -49,3 +49,17 @@ data "archive_file" "lambda_package" {
   source_file = "../bin/main"
   output_path = "../bin/main.zip"
 }
+
+# ACM
+
+data "aws_route53_zone" "this" {
+  name = var.domain_name
+}
+
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 3.0"
+
+  domain_name = var.domain_name
+  zone_id     = data.aws_route53_zone.this.zone_id
+}
