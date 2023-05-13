@@ -17,13 +17,13 @@ module "lambda" {
   source  = "terraform-aws-modules/lambda/aws"
   version = "~>4.17.0"
 
-  function_name  = "disco-gpt-${random_id.this.id}"
-  handler        = "main"
-  runtime        = "go1.x"
-  
-  publish        = true
+  function_name = "disco-gpt-${random_id.this.id}"
+  handler       = "main"
+  runtime       = "go1.x"
 
-  create_package = false
+  publish = true
+
+  create_package         = false
   local_existing_package = data.archive_file.lambda_package.output_path
 }
 
