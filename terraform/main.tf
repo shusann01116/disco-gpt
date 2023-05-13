@@ -38,6 +38,7 @@ resource "null_resource" "build" {
 }
 
 data "archive_file" "lambda_package" {
+  depends_on  = [null_resource.build]
   type        = "zip"
   source_file = "../bin/main"
   output_path = "../bin/main.zip"
