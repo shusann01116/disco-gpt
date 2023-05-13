@@ -70,6 +70,10 @@ module "lambda" {
       source_arn = "${module.api_gateway.apigatewayv2_api_execution_arn}/*/*"
     }
   }
+
+  environment_variables = {
+    "DISCORD_PUBLIC_KEY" = var.discord_public_key
+  }
 }
 
 resource "null_resource" "build" {

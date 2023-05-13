@@ -1,5 +1,12 @@
 package discord
 
+import (
+	"bytes"
+	"crypto/ed25519"
+	"encoding/hex"
+	"log"
+)
+
 type DiscordRequest struct {
 	ApplicationID string        `json:"application_id"`
 	Entitlements  []interface{} `json:"entitlements"`
@@ -23,4 +30,21 @@ type User struct {
 
 type DicordResponse struct {
 	Message string `json:"message"`
+}
+
+func VerifyRequest(timestamp, body, signature string, key ed25519.PublicKey) bool {
+	msg := bytes.NewBufferString(timestamp + body)
+
+	sig, err := hex.DecodeString(signature)
+	if err != nil {
+		log.Println("Failed to decode signature:", err)
+		return false
+	}
+
+	if len(sig) != ed25519.SignatureSize || sig[63]&224 != 0 {
+		log.Println("Invalid signature")
+		return false
+	}
+
+	return ed25519.Verify(key, msg.Bytes(), sig)
 }

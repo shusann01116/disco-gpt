@@ -5,3 +5,9 @@ variable "domain_name" {
 variable "subdomain_name" {
   type = string
 }
+
+variable "discord_public_key" {
+  type      = string
+  sensitive = true
+}
+
