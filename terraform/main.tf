@@ -5,6 +5,12 @@ provider "aws" {
   skip_metadata_api_check     = true
   skip_region_validation      = true
   skip_credentials_validation = true
+
+  default_tags {
+    tags = {
+      Repo = "github.com/shusann01116/disco-gpt"
+    }
+  }
 }
 
 resource "random_id" "this" {
