@@ -40,6 +40,12 @@ module "api_gateway" {
       payload_format_version = "2.0"
       timeout_milliseconds   = 12000
     }
+
+    "POST /" = {
+      lambda_arn             = module.lambda.lambda_function_arn
+      payload_format_version = "2.0"
+      timeout_milliseconds   = 12000
+    }
   }
 }
 
